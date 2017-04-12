@@ -6,6 +6,7 @@
 
 
     <color name="black">#000</color>
+    <color name="white">#fff</color>
     <color name="primaryRed">#FF1100</color>
 
 </resources>

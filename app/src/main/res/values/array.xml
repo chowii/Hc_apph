@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="states">
+        <item>NSW</item>
+        <item>QLD</item>
+        <item>VIC</item>
+        <item>TAS</item>
+        <item>SA</item>
+        <item>WA</item>
+        <item>NT</item>
+    </string-array>
+
+</resources>
