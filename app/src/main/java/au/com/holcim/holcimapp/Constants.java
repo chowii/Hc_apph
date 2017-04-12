@@ -15,13 +15,7 @@ public class Constants {
     }
 
     public static class Extras {
-        public static final String Customer = "Constants.Extras.Customer";
-        public static final String Alert = "Constants.Extras.Alert";
-        public static final String LinkedCustomer = "Constants.Extras.LinkedCustomer";
-        public static final String Note = "Constants.Extras.Note";
-        public static final String CustomerType = "Constants.Extras.CustomerType";
-        public static final String LaunchedFromNotification = "Constants.Extras.LaunchedFromNotification";
-        public static final String Unauthorized = "Constants.Extras.Unauthorized";
+        public static final String WEBVIEW_URL = "au.com.holcim.holcimapp.Constants.Extras.WEBVIEW_URL";
     }
 
     public static class RequestKey {

@@ -1,3 +1,7 @@
 <resources>
 
+    <string name="contact_number">131188</string>
+    <string name="cant_access_app_url">http://www.google.com</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
+
 </resources>

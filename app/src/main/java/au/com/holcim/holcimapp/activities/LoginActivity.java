@@ -1,17 +1,26 @@
 package au.com.holcim.holcimapp.activities;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
 
+import au.com.holcim.holcimapp.Constants;
 import au.com.holcim.holcimapp.LoginFragment;
+import au.com.holcim.holcimapp.NavHelper;
 import au.com.holcim.holcimapp.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity implements LoginFragment.LoginListener {
 
@@ -52,5 +61,20 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
     @Override
     public void loginError(String error) {
         Snackbar.make(mClcontainer, error, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.btn_contact_holcim)
+    void onClickContactHolcim(View view) {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + getResources().getString(R.string.contact_number)));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, Constants.RequestKey.requestPhonePermission);
+            return;
+        }
+        startActivity(callIntent);
+    }
+    @OnClick(R.id.btn_cant_access_app)
+    void onClickCantAccessApp(View view) {
+        NavHelper.showWebView(this, getResources().getString(R.string.cant_access_app_url));
     }
 }

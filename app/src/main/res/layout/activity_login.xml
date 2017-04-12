@@ -35,6 +35,16 @@
             android:layout_centerVertical="true"/>
 
         <Button
+            android:id="@+id/btn_cant_access_app"
+            style="@style/PlainTextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I can't access the app"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/btn_contact_holcim"/>
+
+        <Button
+            android:id="@+id/btn_contact_holcim"
             style="@style/PlainTextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
