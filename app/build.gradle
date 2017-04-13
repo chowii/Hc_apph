@@ -34,6 +34,8 @@ android {
     productFlavors {
         development {
             resValue "string", "endpoint", "http://staging-1.ap-southeast-2.elasticbeanstalk.com/api/"
+//            resValue "string", "endpoint", "http://demo0065087.mockable.io/"
+
             resValue "string", "app_name", "Holcim Dev"
         }
         production {
@@ -48,6 +50,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'com.android.support:percent:25.1.1'
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.android.support:support-v4:25.1.1'
     compile 'com.android.support:design:25.1.1'
@@ -58,5 +61,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
     compile 'com.wang.avi:library:2.1.3'
+    compile 'com.github.GoodieBag:Pinview:v1.3'
     testCompile 'junit:junit:4.12'
 }

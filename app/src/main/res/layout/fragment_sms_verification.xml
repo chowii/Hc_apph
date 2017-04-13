@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/fl_content_container"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             tools:context="au.com.holcim.holcimapp.SmsVerificationFragment"
+             android:background="@android:color/transparent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_enter_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter Pin"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp"/>
+
+        <com.goodiebag.pinview.Pinview
+            android:id="@+id/pinview"
+            android:layout_below="@+id/tv_enter_pin"
+            app:pinBackground="@drawable/circle_black_stroke"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:splitWidth="8dp"
+            app:pinWidth="58dp"
+            app:pinHeight="58dp"
+            app:pinLength="4"
+            app:cursorVisible="true"
+            app:forceKeyboard="false"
+            app:hint="0"
+            app:inputType="number"
+            app:password="false"/>
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/av_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+            style="@style/AVLoadingIndicatorView.Small"
+            android:padding="8dp"
+            app:indicatorColor="@color/primaryRed"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/pinview"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="32dp">
+
+            <Button
+                android:id="@+id/btn_get_new_pin"
+                style="@style/RedRoundedButton"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:text="Get New Pin"/>
+
+            <Button
+                android:id="@+id/btn_contact_holcim"
+                style="@style/RedRoundedStrokeButton"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:text="Contact Holcim"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</FrameLayout>

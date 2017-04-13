@@ -6,68 +6,95 @@
              android:background="@android:color/transparent"
              tools:context="au.com.holcim.holcimapp.LoginFragment">
 
-    <LinearLayout
-        android:id="@+id/ll_login_fields"
-        android:layout_marginLeft="44dp"
-        android:layout_marginRight="44dp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerVertical="true">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/et_mobile_number"
-            style="@style/StrokeEditText"
+
+        <LinearLayout
+            android:id="@+id/ll_login_fields"
+            android:layout_marginLeft="44dp"
+            android:layout_marginRight="44dp"
             android:layout_width="match_parent"
-            android:hint="Mobile Number"
-            android:drawableLeft="@drawable/ic_iphone"
-            android:padding="8dp"
-            android:layout_marginBottom="8dp"
-            android:maxLines="1"
-            android:inputType="number"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_mobile_number"
+                style="@style/StrokeEditText"
+                android:layout_width="match_parent"
+                android:hint="Mobile Number"
+                android:drawableLeft="@drawable/ic_iphone"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp"
+                android:maxLines="1"
+                android:inputType="number"/>
 
-            <ImageView
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_location"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"/>
+
+                <Spinner
+                    style="@style/StrokeEditText"
+                    android:id="@+id/sp_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:entries="@array/states"
+                    tools:listitem="@layout/spinner_item"
+                    android:paddingLeft="29dp"/>
+
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/btn_get_pin"
+                style="@style/RedRoundedButton"
+                android:layout_width="150dp"
+                android:layout_height="44dp"
+                android:text="Get Pin"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32dp"/>
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/av_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_location"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"/>
+                app:indicatorName="BallSpinFadeLoaderIndicator"
+                style="@style/AVLoadingIndicatorView.Small"
+                android:padding="8dp"
+                app:indicatorColor="@color/primaryRed"
+                android:layout_gravity="center"/>
 
-            <Spinner
-                style="@style/StrokeEditText"
-                android:id="@+id/sp_state"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:entries="@array/states"
-                tools:listitem="@layout/spinner_item"
-                android:paddingLeft="29dp"/>
+        </LinearLayout>
 
-        </RelativeLayout>
 
 
         <Button
-            android:id="@+id/btn_get_pin"
-            style="@style/RedRoundedButton"
-            android:layout_width="150dp"
-            android:layout_height="44dp"
-            android:text="Get Pin"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"/>
-
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/av_indicator"
+            android:id="@+id/btn_cant_access_app"
+            style="@style/PlainTextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:indicatorName="BallSpinFadeLoaderIndicator"
-            style="@style/AVLoadingIndicatorView.Small"
-            android:padding="8dp"
-            app:indicatorColor="@color/primaryRed"
-            android:layout_gravity="center"/>
+            android:text="I can't access the app"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/btn_contact_holcim"/>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/btn_contact_holcim"
+            style="@style/PlainTextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Holcim"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
 
 </FrameLayout>

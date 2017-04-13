@@ -2,6 +2,7 @@ package au.com.holcim.holcimapp.network;
 
 import java.util.Map;
 
+import au.com.holcim.holcimapp.User;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -15,9 +16,9 @@ import retrofit2.http.POST;
 public interface HolcimService {
 
     @POST("sms")
-    Call<ResponseBody> requestSms(@Body Map<String, String> map);
+    Call<User> requestSms(@Body Map<String, String> map);
 
     @POST("sms/verify")
-    Call<ResponseBody> verifySms(@Body Map<String, String> map);
+    Call<User> verifySms(@Body Map<String, Object> map);
 
 }

@@ -20,36 +20,22 @@
             android:scaleType="centerCrop"/>
 
         <ImageView
+            android:id="@+id/img_logo"
             android:scaleType="centerInside"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="44dp"
             android:src="@drawable/splash_logo"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/fl_content_container"/>
+            android:layout_centerHorizontal="true"/>
 
         <FrameLayout
             android:id="@+id/fl_content_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"/>
-
-        <Button
-            android:id="@+id/btn_cant_access_app"
-            style="@style/PlainTextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="I can't access the app"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/btn_contact_holcim"/>
-
-        <Button
-            android:id="@+id/btn_contact_holcim"
-            style="@style/PlainTextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Contact Holcim"
-            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/img_logo"
             android:layout_alignParentBottom="true"/>
+
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

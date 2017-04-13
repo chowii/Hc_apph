@@ -1,6 +1,11 @@
 package au.com.holcim.holcimapp;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +34,7 @@ public class LoginFragment extends Fragment {
 
     public interface LoginListener {
         void loginError(String error);
+        void loginSuccessful();
     }
 
     @Bind(R.id.sp_state) Spinner mSpStates;
@@ -65,12 +71,13 @@ public class LoginFragment extends Fragment {
     public void getPinOnClick(View view) {
         if(validate()) {
             toggleProgressIndicator(true);
-            ApiClient.getService().requestSms(createParams()).enqueue(new Callback<ResponseBody>() {
+            ApiClient.getService().requestSms(createParams()).enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                public void onResponse(Call<User> call, retrofit2.Response<User> response) {
                     LoginFragment.this.toggleProgressIndicator(false);
                     if(response.isSuccessful()) {
-                        //TODO
+                        SharedPrefsHelper.getInstance().saveUserCredentials(response.body());
+                        mListener.loginSuccessful();
                     } else {
                         HolcimError error = HolcimError.fromResponse(response.errorBody(), response.code());
                         if(LoginFragment.this != null) {
@@ -80,7 +87,7 @@ public class LoginFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(Call<User> call, Throwable t) {
                     LoginFragment.this.toggleProgressIndicator(false);
                     t.printStackTrace();
                     LoginFragment.this.mListener.loginError("Failed to login, please try again.");
@@ -120,5 +127,23 @@ public class LoginFragment extends Fragment {
     @OnItemSelected(R.id.sp_state)
     public void onStateSelected(Spinner spinner, int position) {
 
+    }
+
+    // MARK: - ================== Onclicks ==================
+
+    @OnClick(R.id.btn_contact_holcim)
+    void onClickContactHolcim(View view) {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + getResources().getString(R.string.contact_number)));
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, Constants.RequestKey.requestPhonePermission);
+            return;
+        }
+        startActivity(callIntent);
+    }
+
+    @OnClick(R.id.btn_cant_access_app)
+    void onClickCantAccessApp(View view) {
+        NavHelper.showWebView(getActivity(), getResources().getString(R.string.cant_access_app_url));
     }
 }
