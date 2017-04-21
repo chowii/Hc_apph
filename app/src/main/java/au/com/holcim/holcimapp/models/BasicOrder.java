@@ -1,10 +1,15 @@
 package au.com.holcim.holcimapp.models;
 
 import android.content.res.Resources;
+import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
+import android.text.format.DateUtils;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
+import au.com.holcim.holcimapp.DateHelper;
 import au.com.holcim.holcimapp.R;
 
 /**
@@ -37,8 +42,21 @@ public class BasicOrder {
     }
 
     String scheduledTimePrettyString() {
-        //TODO: Implement correctly
+        if(etaDate() != null) {
+            return "Next Delivery approx " + DateUtils.getRelativeTimeSpanString(etaDate().getTime()).toString().replace("In ", "");
+        }
         return "";
+    }
+
+    @Nullable
+    public Date etaDate() {
+        return DateHelper.stringToDate(nextEtaString, DateHelper.unixTimeStampFormat);
+    }
+
+    public String sectionDateFormat() {
+        Date date = etaDate();
+        String formattedDate = DateHelper.ddMMMYYYY.format(date);
+        return "" + (date != null ? formattedDate : "Unkown");
     }
 
 }

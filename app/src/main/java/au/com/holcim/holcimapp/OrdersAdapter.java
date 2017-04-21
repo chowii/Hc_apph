@@ -3,6 +3,7 @@ package au.com.holcim.holcimapp;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.text.format.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import au.com.holcim.holcimapp.models.BasicOrder;
 import au.com.holcim.holcimapp.models.Order;
 import au.com.holcim.holcimapp.models.OrderItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -27,37 +29,44 @@ public class OrdersAdapter extends FlexibleAdapter<OrderItem> {
         mContext = context;
     }
 
-    public void updateDataset(List<Order> orders) {
+    public void updateDataset(List<BasicOrder> orders) {
         sectionNotes(orders);
     }
 
-    private void sectionNotes(final List<Order> orders) {
+    private void sectionNotes(final List<BasicOrder> orders) {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                Collections.sort(orders, new Comparator<Order>() {
+                Collections.sort(orders, new Comparator<BasicOrder>() {
                     @Override
-                    public int compare(Order order, Order order2) {
+                    public int compare(BasicOrder order, BasicOrder order2) {
                         if(order.etaDate() != null && order2.etaDate() != null) {
-                            order.etaDate().compareTo(order2.etaDate());
+                            return order.etaDate().compareTo(order2.etaDate());
                         }
                         return 0;
                     }
                 });
-                Map<String, List<Order>> sectionedOrders = new LinkedHashMap<>();
-                for (Order order : orders) {
-                    String sectionDate = order.sectionDateFormat();
-                    if (!sectionedOrders.containsKey(sectionDate)) {
-                        sectionedOrders.put(sectionDate, new ArrayList<Order>());
+                Map<String, List<BasicOrder>> sectionedOrders = new LinkedHashMap<>();
+                for (BasicOrder order : orders) {
+                    String sectionTitle;
+                    if(order.etaDate() == null) {
+                        sectionTitle = "UNKNOWN";
+                    } else if(DateUtils.isToday(order.etaDate().getTime())) {
+                        sectionTitle = "TODAY";
+                    } else {
+                        sectionTitle = "UPCOMING (Next 14 days)";
                     }
-                    sectionedOrders.get(sectionDate).add(order);
+                    if (!sectionedOrders.containsKey(sectionTitle)) {
+                        sectionedOrders.put(sectionTitle, new ArrayList<>());
+                    }
+                    sectionedOrders.get(sectionTitle).add(order);
                 }
 
                 Handler mainHandler = new Handler(mContext.getMainLooper());
 
                 final List<OrderItem> newItems = new ArrayList<>();
                 for(Object key: (sectionedOrders.keySet().toArray())) {
-                    List<Order> sectionOfOrders = sectionedOrders.get(key);
+                    List<BasicOrder> sectionOfOrders = sectionedOrders.get(key);
                     OrderHeaderItem header = new OrderHeaderItem(((String) key));
                     for(int i = 0; i < sectionOfOrders.size(); i++) {
                         newItems.add(new OrderItem(header, sectionOfOrders.get(i)));

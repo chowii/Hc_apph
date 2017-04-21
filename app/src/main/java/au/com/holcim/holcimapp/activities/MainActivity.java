@@ -31,7 +31,7 @@ import au.com.holcim.holcimapp.helpers.BottomNavigationViewHelper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Bind(R.id.bottom_bar) BottomNavigationView mBottomBar;
     @Bind(R.id.fl_content_container) FrameLayout mFlContainer;
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        mBottomBar.findViewById(R.id.action_orders).performClick();
     }
 
     private void handleBottomNavigationItemSelected(MenuItem item) {

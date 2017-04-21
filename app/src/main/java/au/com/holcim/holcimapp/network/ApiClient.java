@@ -11,6 +11,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
+import java.util.List;
 
 import au.com.holcim.holcimapp.Constants;
 import okhttp3.OkHttpClient;
@@ -72,8 +73,10 @@ public class ApiClient {
                     JsonElement jsonElement = elementAdapter.read(in);
                     if (jsonElement.isJsonObject()) {
                         JsonObject jsonObject = jsonElement.getAsJsonObject();
-                        if (jsonObject.has("data") && jsonObject.get("data").isJsonObject())
-                        {
+                        if (jsonObject.has("data"))
+                        if(jsonObject.get("data").isJsonObject()) {
+                            jsonElement = jsonObject.get("data");
+                        } else if(jsonObject.get("data").isJsonArray() && type.getRawType().isAssignableFrom(List.class)) {
                             jsonElement = jsonObject.get("data");
                         }
                     }

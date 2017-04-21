@@ -54,15 +54,4 @@ public class Order extends BasicOrder {
 
     }
 
-    @Nullable
-    public Date etaDate() {
-        return DateHelper.stringToDate(nextEtaString, DateHelper.unixTimeStampFormat);
-    }
-
-    public String sectionDateFormat() {
-        Date date = etaDate();
-        String formattedDate = DateHelper.ddMMMYYYY.format(date);
-        return "" + (date != null ? formattedDate : "Unkown");
-    }
-
 }

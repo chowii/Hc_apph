@@ -1,19 +1,26 @@
 package au.com.holcim.holcimapp.activities;
 
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
+import au.com.holcim.holcimapp.R;
 import au.com.holcim.holcimapp.helpers.AlertDialogHelper;
 import au.com.holcim.holcimapp.helpers.NavHelper;
 import au.com.holcim.holcimapp.helpers.SharedPrefsHelper;
 import au.com.holcim.holcimapp.network.HttpStatusException;
+import butterknife.Bind;
 
 /**
  * Created by Jovan on 21/4/17.
  */
 
 public class BaseActivity extends AppCompatActivity {
+
+    @Nullable
+    @Bind(R.id.toolbar) public Toolbar toolbar;
 
     public void handleError(Throwable t) {
         handleError(t, true, null);

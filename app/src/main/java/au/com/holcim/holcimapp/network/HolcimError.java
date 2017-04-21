@@ -41,7 +41,11 @@ public class HolcimError {
     }
 
     public static HolcimError fromJson(String json) {
-        return new Gson().fromJson(json, HolcimError.class);
+        try {
+            return new Gson().fromJson(json, HolcimError.class);
+        } catch(Exception e) {
+            return new HolcimError();
+        }
     }
 
 }

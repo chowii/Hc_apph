@@ -23,9 +23,9 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 public class OrderItem extends AbstractSectionableItem<OrderItem.OrderViewHolder, OrderHeaderItem> {
 
     protected OrderHeaderItem mHeader;
-    public Order mOrder;
+    public BasicOrder mOrder;
 
-    public OrderItem(OrderHeaderItem header, Order order) {
+    public OrderItem(OrderHeaderItem header, BasicOrder order) {
         super(header);
         this.mHeader = header;
         this.mOrder = order;
