@@ -3,7 +3,7 @@ package au.com.holcim.holcimapp.network;
 
 import java.io.IOException;
 
-import au.com.holcim.holcimapp.SharedPrefsHelper;
+import au.com.holcim.holcimapp.helpers.SharedPrefsHelper;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;

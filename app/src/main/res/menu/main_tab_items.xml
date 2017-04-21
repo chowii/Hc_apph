@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_orders"
+          android:title="Orders"
+          android:icon="@drawable/black_truck"
+        app:showAsAction="always|withText"
+        android:enabled="true"/>
+    <item android:id="@+id/action_alerts"
+          android:title="Alerts"
+          android:icon="@drawable/bell"
+          app:showAsAction="always|withText"
+          android:enabled="true" />
+    <item android:id="@+id/action_contact"
+          android:title="Contact"
+          android:icon="@drawable/black_phone"
+          app:showAsAction="always|withText"
+          android:enabled="true" />
+    <item android:id="@+id/action_more"
+          android:title="More"
+          android:icon="@drawable/more"
+          app:showAsAction="always|withText"
+          android:enabled="true"
+        />
+</menu>

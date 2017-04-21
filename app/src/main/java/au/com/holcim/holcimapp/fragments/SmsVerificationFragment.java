@@ -1,4 +1,4 @@
-package au.com.holcim.holcimapp;
+package au.com.holcim.holcimapp.fragments;
 
 import android.Manifest;
 import android.content.Intent;
@@ -18,16 +18,20 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.HashMap;
 import java.util.Map;
 
+import au.com.holcim.holcimapp.Constants;
+import au.com.holcim.holcimapp.network.HolcimError;
+import au.com.holcim.holcimapp.R;
+import au.com.holcim.holcimapp.models.User;
+import au.com.holcim.holcimapp.helpers.SharedPrefsHelper;
 import au.com.holcim.holcimapp.network.ApiClient;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 
-public class SmsVerificationFragment extends Fragment {
+public class SmsVerificationFragment extends BaseFragment {
 
     private static final String TAG = "SignUpVerifyActivity";
     public interface SmsVerificationListener {
@@ -81,23 +85,22 @@ public class SmsVerificationFragment extends Fragment {
             @Override
             public void onResponse(Call<User> call, retrofit2.Response<User> response) {
                 SmsVerificationFragment.this.toggleProgressIndicator(false);
-                if(response.isSuccessful()) {
-                    mListener.smsVerificationSuccessful();
-                } else {
-                    HolcimError error = HolcimError.fromResponse(response.errorBody(), response.code());
-                    if(SmsVerificationFragment.this != null) {
-                        SmsVerificationFragment.this.mListener.smsVerificationFailed(error.getMessage());
-                    }
-                }
+                SharedPrefsHelper.getInstance().saveUserCredentials(response.body());
+                mListener.smsVerificationSuccessful();
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
                 SmsVerificationFragment.this.toggleProgressIndicator(false);
-                SmsVerificationFragment.this.mListener.smsVerificationFailed("Failed to login, please try again.");
+                SmsVerificationFragment.this.handleError(t, false, null);
             }
         });
+    }
+
+    @Override
+    public void handleCustomError(String error) {
+        mListener.smsVerificationFailed(error);
     }
 
     private void toggleProgressIndicator(boolean show) {

@@ -32,6 +32,7 @@ public class ApiClient {
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(new AddAuthorizationInterceptor())
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(new StatusCodeInterceptor())
             .build();
 
     public static Retrofit retrofit =

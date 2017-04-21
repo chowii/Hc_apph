@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_orders"
+        icon="@drawable/black_truck"
+        title="ORDERS" />
+    <tab
+        id="@+id/tab_alerts"
+        icon="@drawable/bell"
+        title="ALERTS" />
+    <tab
+        id="@+id/tab_contact"
+        icon="@drawable/black_phone"
+        title="CONTACT" />
+    <tab
+        id="@+id/tab_more"
+        icon="@drawable/more"
+        title="MORE" />
+</tabs>

@@ -1,4 +1,4 @@
-package au.com.holcim.holcimapp;
+package au.com.holcim.holcimapp.models;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,12 +8,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
-    int id;
+    public int id;
     @SerializedName("phone_number")
-    String phoneNumber;
+    public String phoneNumber;
     @SerializedName("order_state")
-    String state;
+    public String state;
     @SerializedName("auth_token")
-    String authToken;
+    public String authToken;
 
 }

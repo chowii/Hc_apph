@@ -1,29 +1,22 @@
 package au.com.holcim.holcimapp.activities;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import au.com.holcim.holcimapp.Constants;
-import au.com.holcim.holcimapp.LoginFragment;
-import au.com.holcim.holcimapp.NavHelper;
+import au.com.holcim.holcimapp.fragments.LoginFragment;
 import au.com.holcim.holcimapp.R;
-import au.com.holcim.holcimapp.SharedPrefsHelper;
-import au.com.holcim.holcimapp.SmsVerificationFragment;
+import au.com.holcim.holcimapp.helpers.NavHelper;
+import au.com.holcim.holcimapp.helpers.SharedPrefsHelper;
+import au.com.holcim.holcimapp.fragments.SmsVerificationFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity implements LoginFragment.LoginListener, SmsVerificationFragment.SmsVerificationListener {
 
@@ -37,17 +30,17 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        showCorrectIntialFragment();
+        changeToLoginFragment();
+        String reason = getIntent().getStringExtra(Constants.Extras.REASON);
+        if(reason != null) {
+            Snackbar.make(mClcontainer, reason, Snackbar.LENGTH_LONG).show();
+        }
     }
 
     // MARK: - ================== Fragment related ==================
 
     private void showCorrectIntialFragment() {
-        if(SharedPrefsHelper.getInstance().hasEnteredMobileAndState()) {
-            changeToSmsVerifyFragment();
-        } else {
-            changeToLoginFragment();
-        }
+
     }
 
     private void changeToLoginFragment() {
@@ -102,6 +95,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
 
     @Override
     public void smsVerificationSuccessful() {
-        Log.d("TEST", "Sms successful.");
+        NavHelper.showMainActivity(this);
     }
 }

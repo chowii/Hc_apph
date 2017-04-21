@@ -1,9 +1,11 @@
-package au.com.holcim.holcimapp;
+package au.com.holcim.holcimapp.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import au.com.holcim.holcimapp.models.User;
 
 /**
  *
@@ -46,6 +48,13 @@ public class SharedPrefsHelper {
                 .putString(SHARED_PREFS_AUTH_TOKEN, user.authToken)
                 .putString(SHARED_PREFS_LAST_MOBILE, user.phoneNumber)
                 .putString(SHARED_PREFS_LAST_STATE, user.state)
+                .apply();
+    }
+
+    public void saveUserCredentials(String mobileNumber, String state) {
+        sharedPreferences.edit()
+                .putString(SHARED_PREFS_LAST_MOBILE, mobileNumber)
+                .putString(SHARED_PREFS_LAST_STATE, state)
                 .apply();
     }
 

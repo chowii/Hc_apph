@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
-
+apply plugin: 'me.tatarka.retrolambda'
 buildscript {
     repositories {
         mavenCentral()
@@ -10,6 +10,7 @@ buildscript {
         // replace with the current version of the Android plugin
         classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
     }
 }
 
@@ -43,6 +44,10 @@ android {
             resValue "string", "app_name", "Holcim"
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -62,5 +67,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
     compile 'com.wang.avi:library:2.1.3'
     compile 'com.github.GoodieBag:Pinview:v1.3'
+    compile 'com.roughike:bottom-bar:2.0.2'
+    compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
     testCompile 'junit:junit:4.12'
 }
