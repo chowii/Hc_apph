@@ -18,12 +18,12 @@ import au.com.holcim.holcimapp.R;
 
 public class BasicOrder {
 
-    int id;
-    String status;
+    public int id;
+    public String status;
     @SerializedName("delivery_address")
-    String deliveryAddress;
+    public String deliveryAddress;
     @SerializedName("next_eta")
-    String nextEtaString;
+    public String nextEtaString;
 
     int getStatusColour(Resources resources) {
         //TODO: Confirm correct colours

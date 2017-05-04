@@ -26,6 +26,9 @@ public class HolcimError {
     }
 
     public String getMessage() {
+        if(error == null) {
+            return "Failed to complete request, please try again.";
+        }
         return error;
     }
 
@@ -36,6 +39,9 @@ public class HolcimError {
             error = fromJson(errorBodyString);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if(error == null) {
+            error = new HolcimError();
         }
         return error;
     }

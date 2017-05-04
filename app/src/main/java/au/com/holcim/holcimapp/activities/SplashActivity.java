@@ -33,7 +33,7 @@ public class SplashActivity extends BaseActivity {
             });
         } else {
             NavHelper.showLandingActivity(SplashActivity.this, null);
-        }
+        };
     }
 
     @Override

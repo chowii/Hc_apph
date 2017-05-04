@@ -43,14 +43,6 @@ public class SharedPrefsHelper {
         return !sharedPreferences.getString(SHARED_PREFS_LAST_MOBILE, "").isEmpty() && !sharedPreferences.getString(SHARED_PREFS_LAST_STATE, "").isEmpty();
     }
 
-    public void saveUserCredentials(User user) {
-        sharedPreferences.edit()
-                .putString(SHARED_PREFS_AUTH_TOKEN, user.authToken)
-                .putString(SHARED_PREFS_LAST_MOBILE, user.phoneNumber)
-                .putString(SHARED_PREFS_LAST_STATE, user.state)
-                .apply();
-    }
-
     public void saveUserCredentials(String mobileNumber, String state) {
         sharedPreferences.edit()
                 .putString(SHARED_PREFS_LAST_MOBILE, mobileNumber)

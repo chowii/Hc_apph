@@ -69,5 +69,7 @@ dependencies {
     compile 'com.github.GoodieBag:Pinview:v1.3'
     compile 'com.roughike:bottom-bar:2.0.2'
     compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    compile 'com.akexorcist:RoundCornerProgressBar:2.0.3'
     testCompile 'junit:junit:4.12'
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressBarView">
+        <attr name="tracking" format="string"/>
+        <attr name="progress_text" format="string"/>
+        <attr name="progress" format="float"/>
+        <attr name="max" format="float"/>
+    </declare-styleable>
+</resources>

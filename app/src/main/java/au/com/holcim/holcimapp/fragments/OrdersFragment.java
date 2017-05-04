@@ -1,11 +1,8 @@
 package au.com.holcim.holcimapp.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,11 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import au.com.holcim.holcimapp.OrdersAdapter;
 import au.com.holcim.holcimapp.R;
+import au.com.holcim.holcimapp.helpers.NavHelper;
 import au.com.holcim.holcimapp.models.BasicOrder;
 import au.com.holcim.holcimapp.network.ApiClient;
 import butterknife.Bind;
@@ -29,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrdersFragment extends BaseFragment {
+public class OrdersFragment extends BaseFragment implements OrdersAdapter.OnItemClickListener {
 
     @Bind(R.id.orders_recycler_view) RecyclerView mRecyclerView;
     @Bind(R.id.swiperefresh) SwipeRefreshLayout mSwipeRefreshLayout;
@@ -62,7 +59,7 @@ public class OrdersFragment extends BaseFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.orders_fragment_menu, menu);
+        inflater.inflate(R.menu.refresh_menu, menu);
     }
 
     @Override
@@ -111,5 +108,11 @@ public class OrdersFragment extends BaseFragment {
                 handleError(t, true, mClContainer);
             }
         });
+    }
+
+    @Override
+    public boolean onItemClick(int position) {
+        NavHelper.showOrderDetailActivity(getActivity(), mAdapter.getItem(position).mOrder.id);
+        return true;
     }
 }

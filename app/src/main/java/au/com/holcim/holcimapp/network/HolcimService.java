@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import au.com.holcim.holcimapp.models.BasicOrder;
+import au.com.holcim.holcimapp.models.Order;
 import au.com.holcim.holcimapp.models.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by Jovan on 12/4/17.
@@ -27,5 +29,8 @@ public interface HolcimService {
 
     @GET("orders")
     Call<List<BasicOrder>> getOrders();
+
+    @GET("orders/{id}")
+    Call<Order> getOrder(@Path("id") int id);
 
 }

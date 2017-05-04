@@ -75,7 +75,7 @@ public class SmsVerificationFragment extends BaseFragment {
         params.put("device", deviceParams);
         params.put("pin_code", mPinview.getValue());
         params.put("state", SharedPrefsHelper.getInstance().getLastUsedState());
-        params.put("phone_number", SharedPrefsHelper.getInstance().getLastUsedMobile());
+        params.put("phone_number", "61" + SharedPrefsHelper.getInstance().getLastUsedMobile().substring(1));
         return params;
     }
 
@@ -85,7 +85,7 @@ public class SmsVerificationFragment extends BaseFragment {
             @Override
             public void onResponse(Call<User> call, retrofit2.Response<User> response) {
                 SmsVerificationFragment.this.toggleProgressIndicator(false);
-                SharedPrefsHelper.getInstance().saveUserCredentials(response.body());
+                SharedPrefsHelper.getInstance().setAuthToken(response.body().authToken);
                 mListener.smsVerificationSuccessful();
             }
 

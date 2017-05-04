@@ -51,6 +51,11 @@ public class DateHelper {
         }
     }
 
+    public static String dateToString(Date date, String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        return formatter.format(date);
+    }
+
     public static String toApiDateTime(String s) {
         if (s.isEmpty()) {
             return "";
@@ -67,7 +72,7 @@ public class DateHelper {
 
     @Nullable
     public static Date stringToDate(String dateString, String formatString) {
-        if(dateString == null || formatString == null) {
+        if (dateString == null || formatString == null) {
             return null;
         }
         SimpleDateFormat format = new SimpleDateFormat(formatString);
@@ -85,26 +90,25 @@ public class DateHelper {
         showPicker(context, v);
     }
 
-    public static void showFuturePicker(Context context, final TextView v){
+    public static void showFuturePicker(Context context, final TextView v) {
         Calendar today = Calendar.getInstance();
         getDatePickerDialog(context, v, today, TIMELINE_FUTURE, null).show();
     }
 
     /**
-     *
      * @param context
      * @param v
-     * @param date must be of the form dd/mm/yyyy
+     * @param date         must be of the form dd/mm/yyyy
      * @param pastOrFuture must of the form DateHelper.FUTURE or DateHelper.PAST. can be 0 if does not
      *                     past and future allowed
      * @return
      */
     public static DatePickerDialog getDatePickerDialog(Context context, final TextView v, final Calendar date,
-                                                       int pastOrFuture , DatePickerDialog.OnDateSetListener pListener){
+                                                       int pastOrFuture, DatePickerDialog.OnDateSetListener pListener) {
 
         DatePickerDialog.OnDateSetListener listener;
 
-        if (pListener==null) {
+        if (pListener == null) {
             listener = new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -112,17 +116,17 @@ public class DateHelper {
                     v.setText(displayDateFormat.format(calendar.getTime()));
                 }
             };
-        }else{
+        } else {
             listener = pListener;
         }
 
         // If our textView isn't update, use the passed date or today's date if nothing is passed
         Calendar cal = null;
-        if (date!=null){
+        if (date != null) {
             cal = date;
         }
-        if (cal==null) {
-            cal= Calendar.getInstance();
+        if (cal == null) {
+            cal = Calendar.getInstance();
         }
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -140,15 +144,15 @@ public class DateHelper {
         }
 
         DatePickerDialog dialog = new DatePickerDialog(context, listener, year, month, day);
-        if(pastOrFuture!=0){
+        if (pastOrFuture != 0) {
             Calendar today = Calendar.getInstance();
-            if (pastOrFuture== TIMELINE_PAST){
-                if (today.compareTo(cal)<=0) // today is before cal
+            if (pastOrFuture == TIMELINE_PAST) {
+                if (today.compareTo(cal) <= 0) // today is before cal
                     dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
                 else dialog.getDatePicker().setMaxDate(today.getTimeInMillis());
             }
-            if (pastOrFuture== TIMELINE_FUTURE){
-                if (today.compareTo(cal)<=0)//today is before cal
+            if (pastOrFuture == TIMELINE_FUTURE) {
+                if (today.compareTo(cal) <= 0)//today is before cal
                     dialog.getDatePicker().setMaxDate(today.getTimeInMillis());
                 else dialog.getDatePicker().setMinDate(cal.getTimeInMillis());
             }
@@ -157,7 +161,7 @@ public class DateHelper {
         return dialog;
     }
 
-    public static void showTimePikerDialog(Context context, final TextView v, final int pastFuture){
+    public static void showTimePikerDialog(Context context, final TextView v, final int pastFuture) {
 
         final GregorianCalendar now = new GregorianCalendar();
 
@@ -168,8 +172,8 @@ public class DateHelper {
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                calendar.set(year, month,day, hourOfDay,minute);
-                switch (pastFuture){
+                calendar.set(year, month, day, hourOfDay, minute);
+                switch (pastFuture) {
                     case TIMELINE_FUTURE:
                         if (!isDateInPast(calendar)) {
                             v.setText(displayDateTimeFormat.format(calendar.getTime()));
@@ -195,22 +199,23 @@ public class DateHelper {
         int hour = now.get(Calendar.HOUR_OF_DAY);
         int minute = now.get(Calendar.MINUTE);
 
-        TimePickerDialog dialog = new TimePickerDialog(context,listener, hour, minute, false);
+        TimePickerDialog dialog = new TimePickerDialog(context, listener, hour, minute, false);
         dialog.show();
     }
 
-    public static boolean isDateInPast(GregorianCalendar calendar){
+    public static boolean isDateInPast(GregorianCalendar calendar) {
         GregorianCalendar now = new GregorianCalendar();
         return calendar.getTimeInMillis() < now.getTimeInMillis();
     }
 
     /**
      * Show a date picker and on callback show a time picker
+     *
      * @param context
      * @param v
      * @param pastFuture of the Format DateHelper.TIMELINE...
      */
-    public static void showDateTimeDialog(final Context context, final TextView v, final int pastFuture){
+    public static void showDateTimeDialog(final Context context, final TextView v, final int pastFuture) {
 
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -226,11 +231,12 @@ public class DateHelper {
 
 
     /**
-     *Takes a text in format d MMM YYYY and return a string formated dd/MM/yyyy
+     * Takes a text in format d MMM YYYY and return a string formated dd/MM/yyyy
+     *
      * @param text must be of the form d MMM YYYY
      * @return
      */
-    public static String dateForAPICall (String text){
+    public static String dateForAPICall(String text) {
 
         if (text.isEmpty()) {
             return "";
@@ -246,11 +252,10 @@ public class DateHelper {
     }
 
     /**
-     *
      * @param text must be of the form dd/mm/yyyy
      * @return
      */
-    public static Calendar getCalendarFromString (String text){
+    public static Calendar getCalendarFromString(String text) {
         try {
             Date date = apiDateFormat.parse(text);
             return apiDateFormat.getCalendar();
@@ -263,9 +268,10 @@ public class DateHelper {
     /**
      * Creates a date set to yesterday at the same time as now and returns the corresponding String
      * in the format d MMM YYYY
+     *
      * @return
      */
-    public static String getYesterdayAsText(){
+    public static String getYesterdayAsText() {
         Calendar yesterday = Calendar.getInstance();
         yesterday.add(Calendar.DAY_OF_YEAR, -1);
 
@@ -274,11 +280,10 @@ public class DateHelper {
 
 
     /**
-     *
      * @param stringDate
      * @return
      */
-    public static String getDisplayableStringFromStringDateReceivedFromAPI(String stringDate){
+    public static String getDisplayableStringFromStringDateReceivedFromAPI(String stringDate) {
         try {
             Date date = apiDateTimeFormat.parse(stringDate);
             return displayDateFormat.format(date);
@@ -291,10 +296,11 @@ public class DateHelper {
     /**
      * Takes a date in the Format d/MM/yyy (ex 01/02/2016) and returns a string of the format
      * d MMM yyyyy
+     *
      * @param date
      * @return a valid date to display or an empty string if a parse exception occurred.
      */
-    public static String getDisplayableDateFromAPIDateFormat(String date){
+    public static String getDisplayableDateFromAPIDateFormat(String date) {
         Date formattedDate;
         try {
             formattedDate = apiDateFormat.parse(date);
@@ -305,4 +311,39 @@ public class DateHelper {
         return displayDateFormat.format(formattedDate);
     }
 
+    //1 minute = 60 seconds
+    //1 hour = 60 x 60 = 3600
+    //1 day = 3600 x 24 = 86400
+    public static String getTimeUntilString(Date startDate, Date endDate) {
+
+        String string = "";
+        //milliseconds
+        long different = endDate.getTime() - startDate.getTime();
+
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = different / daysInMilli;
+        different = different % daysInMilli;
+
+        long elapsedHours = different / hoursInMilli;
+        different = different % hoursInMilli;
+
+        long elapsedMinutes = different / minutesInMilli;
+        different = different % minutesInMilli;
+
+        long elapsedSeconds = different / secondsInMilli;
+
+        if (elapsedDays > 0) { string += elapsedDays + " d" + (elapsedDays == 1 ? "" : "s") + "\n"; }
+        if (elapsedHours > 0) { string += elapsedHours + " hr" + (elapsedHours == 1 ? "" : "s") + "\n"; }
+        if (elapsedMinutes > 0) { string += elapsedMinutes + " min" + (elapsedMinutes == 1 ? "" : "s") + "\n"; }
+        if(string.length() >= 2) {
+            string.substring(0, string.length() - 3);
+        } else {
+            string = "NA";
+        }
+        return string;
+    }
 }

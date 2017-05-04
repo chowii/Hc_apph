@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_tracking"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:textSize="10sp"
+        android:layout_above="@+id/rc_progress_bar"
+        android:layout_toLeftOf="@+id/tv_progress"
+        android:layout_gravity="left"/>
+
+    <TextView
+        android:id="@+id/tv_progress"
+        style="@style/NormalText.Bold"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"/>
+
+    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+        android:id="@+id/rc_progress_bar"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@id/tv_progress"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        app:rcBackgroundPadding="0dp"
+        app:rcProgressColor="@color/status_delivered_blue"
+        app:rcBackgroundColor="@android:color/transparent"
+        android:background="@drawable/progress_bar_background"/>
+
+</merge>

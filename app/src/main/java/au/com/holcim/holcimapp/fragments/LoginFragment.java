@@ -123,7 +123,7 @@ public class LoginFragment extends BaseFragment {
                 @Override
                 public void onResponse(Call<User> call, retrofit2.Response<User> response) {
                     LoginFragment.this.toggleProgressIndicator(false);
-                    SharedPrefsHelper.getInstance().saveUserCredentials(response.body());
+                    SharedPrefsHelper.getInstance().saveUserCredentials(mEtMobileNumber.getText().toString(), mSpStates.getSelectedItem().toString());
                     mListener.loginSuccessful();
                 }
 

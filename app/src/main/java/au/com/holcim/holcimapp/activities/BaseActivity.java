@@ -20,7 +20,7 @@ import butterknife.Bind;
 public class BaseActivity extends AppCompatActivity {
 
     @Nullable
-    @Bind(R.id.toolbar) public Toolbar toolbar;
+    @Bind(R.id.toolbar) public Toolbar mToolbar;
 
     public void handleError(Throwable t) {
         handleError(t, true, null);
@@ -50,6 +50,26 @@ public class BaseActivity extends AppCompatActivity {
                     NavHelper.showLandingActivity(this, httpException.error);
                     break;
             }
+        }
+    }
+
+    public void setToolbar(String title, int image) {
+        mToolbar = ((Toolbar) findViewById(R.id.toolbar));
+        if(mToolbar != null) {
+            setSupportActionBar(mToolbar);
+            getSupportActionBar().setLogo(image);
+            getSupportActionBar().setIcon(image);
+            getSupportActionBar().setTitle(title);
+        }
+    }
+
+    public void setToolbar(String title, boolean showBack) {
+        mToolbar = ((Toolbar) findViewById(R.id.toolbar));
+        if(mToolbar != null) {
+            setSupportActionBar(mToolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(showBack);
+            getSupportActionBar().setDisplayShowHomeEnabled(showBack);
+            getSupportActionBar().setTitle(title);
         }
     }
 

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
 import au.com.holcim.holcimapp.DateHelper;
 
@@ -15,43 +16,69 @@ import au.com.holcim.holcimapp.DateHelper;
 public class Order extends BasicOrder {
 
     @SerializedName("order_date")
-    String orderDateString;
+    public String orderDateString;
     @SerializedName("order_code")
-    String orderCode;
+    public String orderCode;
     @SerializedName("tickets_delivered")
-    String ticketsDelivered;
+    public String ticketsDelivered;
     @SerializedName("product_line")
-    String productLine;
+    public String productLine;
     @SerializedName("order_status")
-    String orderStatus;
+    public String orderStatus;
     @SerializedName("user_id")
-    int userId;
+    public int userId;
     @SerializedName("quote_number")
-    String quoteNumber;
+    public String quoteNumber;
     @SerializedName("pricing_plant")
-    String pricingPlant;
+    public String pricingPlant;
     @SerializedName("customer_requested_start_time")
-    String customerRequestedStartTimeString;
-    String product;
+    public String customerRequestedStartTimeString;
+    public String product;
     @SerializedName("product_description")
-    String productDescription;
-    @SerializedName("order_quantity")
-    String orderQuantity;
+    public String productDescription;
+    @SerializedName("ordered_qty")
+    public String orderQuantity;
     @SerializedName("expected_number_of_loads")
-    int expectedNumberOfLoads;
+    public int expectedNumberOfLoads;
     @SerializedName("total_product_shipped")
-    String totalProductShipped;
+    public String totalProductShipped;
     @SerializedName("order_cancellation_reason_code")
-    String orderCancellationReasonCode;
+    public String orderCancellationReasonCode;
     @SerializedName("created_at")
-    String createdAtString;
+    public String createdAtString;
     @SerializedName("updated_at")
-    String updatedAtString;
-    Float latitude;
-    Float longitude;
+    public String updatedAtString;
+    public Float latitude;
+    public Float longitude;
+    public List<Ticket> tickets;
+
 
     public Order() {
 
     }
 
+    public Float getTotalProductShippedFloat() {
+        return Float.valueOf(totalProductShipped) != null ? Float.valueOf(totalProductShipped) : 0;
+    }
+
+    public Float getOrderQuantityFloat() {
+        return Float.valueOf(orderQuantity) != null ? Float.valueOf(orderQuantity) : 0;
+    }
+
+    public Float getExpectedNumberOfLoadsFloat
+            () {
+        return Float.valueOf(expectedNumberOfLoads) != null ? Float.valueOf(expectedNumberOfLoads) : 0;
+    }
+
+    public Float getTicketsDeliveredFloat() {
+        return Float.valueOf(ticketsDelivered) != null ? Float.valueOf(ticketsDelivered) : 0;
+    }
+
+    public String getBalanceProgressString() {
+        return getTotalProductShippedFloat() + "㎥ / " + getOrderQuantityFloat() + "㎥";
+    }
+
+    public String getTicketsDeliveredProgressString() {
+        return getTicketsDeliveredFloat() + " / " + getExpectedNumberOfLoadsFloat();
+    }
 }
