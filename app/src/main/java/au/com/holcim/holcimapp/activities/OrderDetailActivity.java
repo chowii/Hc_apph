@@ -14,7 +14,9 @@ import android.widget.TextView;
 import au.com.holcim.holcimapp.Constants;
 import au.com.holcim.holcimapp.R;
 import au.com.holcim.holcimapp.TicketsAdapter;
+import au.com.holcim.holcimapp.helpers.NavHelper;
 import au.com.holcim.holcimapp.models.Order;
+import au.com.holcim.holcimapp.models.Ticket;
 import au.com.holcim.holcimapp.network.ApiClient;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,9 +24,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrderDetailActivity extends BaseActivity {
+public class OrderDetailActivity extends BaseActivity implements TicketsAdapter.OnItemClickListener {
 
     int orderId;
+    Order order;
     @Bind(R.id.rv_tickets) RecyclerView mRvTickets;
     @Bind(R.id.swiperefresh) SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.cl_container) CoordinatorLayout mClContainer;
@@ -71,8 +74,9 @@ public class OrderDetailActivity extends BaseActivity {
         ApiClient.getService().getOrder(orderId).enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Call<Order> call, Response<Order> response) {
+                OrderDetailActivity.this.order = response.body();
                 OrderDetailActivity.this.mSwipeRefreshLayout.setRefreshing(false);
-                mAdapter.updateDataset(response.body());
+                mAdapter.updateDataset(order);
                 OrderDetailActivity.this.mTxtEmptyDataset.setVisibility(response.body().tickets.size() == 0 ? View.VISIBLE : View.GONE);
             }
 
@@ -100,5 +104,11 @@ public class OrderDetailActivity extends BaseActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onItemClick(int position) {
+        NavHelper.showTicketsMapActivity(this, order, order.tickets.get(position - 1).id);
+        return true;
     }
 }

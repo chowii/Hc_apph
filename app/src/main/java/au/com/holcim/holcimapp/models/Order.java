@@ -1,11 +1,16 @@
 package au.com.holcim.holcimapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import au.com.holcim.holcimapp.DateHelper;
 
@@ -13,7 +18,7 @@ import au.com.holcim.holcimapp.DateHelper;
  * Created by Jovan on 13/4/17.
  */
 
-public class Order extends BasicOrder {
+public class Order extends BasicOrder implements Parcelable {
 
     @SerializedName("order_date")
     public String orderDateString;
@@ -52,6 +57,9 @@ public class Order extends BasicOrder {
     public Float longitude;
     public List<Ticket> tickets;
 
+    public LatLng getLatLng() {
+        return new LatLng(latitude != null ? latitude : 0, longitude != null ? longitude : 0);
+    }
 
     public Order() {
 
@@ -81,4 +89,78 @@ public class Order extends BasicOrder {
     public String getTicketsDeliveredProgressString() {
         return getTicketsDeliveredFloat() + " / " + getExpectedNumberOfLoadsFloat();
     }
+
+    public int getTicketIndexWithId(int id) {
+        for(int i = 0; i < tickets.size(); i++) {
+            if(tickets.get(i).id == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.orderDateString);
+        dest.writeString(this.orderCode);
+        dest.writeString(this.ticketsDelivered);
+        dest.writeString(this.productLine);
+        dest.writeString(this.orderStatus);
+        dest.writeInt(this.userId);
+        dest.writeString(this.quoteNumber);
+        dest.writeString(this.pricingPlant);
+        dest.writeString(this.customerRequestedStartTimeString);
+        dest.writeString(this.product);
+        dest.writeString(this.productDescription);
+        dest.writeString(this.orderQuantity);
+        dest.writeInt(this.expectedNumberOfLoads);
+        dest.writeString(this.totalProductShipped);
+        dest.writeString(this.orderCancellationReasonCode);
+        dest.writeString(this.createdAtString);
+        dest.writeString(this.updatedAtString);
+        dest.writeValue(this.latitude);
+        dest.writeValue(this.longitude);
+        dest.writeList(this.tickets);
+    }
+
+    protected Order(Parcel in) {
+        this.orderDateString = in.readString();
+        this.orderCode = in.readString();
+        this.ticketsDelivered = in.readString();
+        this.productLine = in.readString();
+        this.orderStatus = in.readString();
+        this.userId = in.readInt();
+        this.quoteNumber = in.readString();
+        this.pricingPlant = in.readString();
+        this.customerRequestedStartTimeString = in.readString();
+        this.product = in.readString();
+        this.productDescription = in.readString();
+        this.orderQuantity = in.readString();
+        this.expectedNumberOfLoads = in.readInt();
+        this.totalProductShipped = in.readString();
+        this.orderCancellationReasonCode = in.readString();
+        this.createdAtString = in.readString();
+        this.updatedAtString = in.readString();
+        this.latitude = (Float) in.readValue(Float.class.getClassLoader());
+        this.longitude = (Float) in.readValue(Float.class.getClassLoader());
+        this.tickets = new ArrayList<Ticket>();
+        in.readList(this.tickets, Ticket.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>() {
+        @Override
+        public Order createFromParcel(Parcel source) {
+            return new Order(source);
+        }
+
+        @Override
+        public Order[] newArray(int size) {
+            return new Order[size];
+        }
+    };
 }

@@ -7,7 +7,10 @@ import au.com.holcim.holcimapp.Constants;
 import au.com.holcim.holcimapp.activities.LoginActivity;
 import au.com.holcim.holcimapp.activities.MainActivity;
 import au.com.holcim.holcimapp.activities.OrderDetailActivity;
+import au.com.holcim.holcimapp.activities.TicketsMapActivity;
 import au.com.holcim.holcimapp.activities.WebViewActivity;
+import au.com.holcim.holcimapp.models.Order;
+import au.com.holcim.holcimapp.models.Ticket;
 
 /**
  * Created by Jovan on 12/4/17.
@@ -16,7 +19,8 @@ import au.com.holcim.holcimapp.activities.WebViewActivity;
 public class NavHelper {
 
     public static void showWebView(Activity activity, String url) {
-        activity.startActivity(new Intent(activity, WebViewActivity.class).putExtra(Constants.Extras.WEBVIEW_URL, url));
+        activity.startActivity(new Intent(activity, WebViewActivity.class)
+                .putExtra(Constants.Extras.WEBVIEW_URL, url));
     }
 
     public static void showMainActivity(Activity activity) {
@@ -25,11 +29,19 @@ public class NavHelper {
     }
 
     public static void showLandingActivity(Activity activity, String reason) {
-        activity.startActivity(new Intent(activity, LoginActivity.class).putExtra(Constants.Extras.REASON, reason));
+        activity.startActivity(new Intent(activity, LoginActivity.class)
+                .putExtra(Constants.Extras.REASON, reason));
         activity.finish();
     }
 
     public static void showOrderDetailActivity(Activity activity, int id) {
-        activity.startActivity(new Intent(activity, OrderDetailActivity.class).putExtra(Constants.Extras.ORDER_ID, id));
+        activity.startActivity(new Intent(activity, OrderDetailActivity.class)
+                .putExtra(Constants.Extras.ORDER_ID, id));
+    }
+
+    public static void showTicketsMapActivity(Activity activity, Order order, int selectedTicketId) {
+        activity.startActivity(new Intent(activity, TicketsMapActivity.class)
+                .putExtra(Constants.Extras.ORDER, order)
+                .putExtra(Constants.Extras.TICKET_ID, selectedTicketId));
     }
 }

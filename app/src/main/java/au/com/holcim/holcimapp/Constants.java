@@ -18,6 +18,8 @@ public class Constants {
         public static final String WEBVIEW_URL = "au.com.holcim.holcimapp.Constants.Extras.WEBVIEW_URL";
         public static final String REASON = "au.com.holcim.holcimapp.Constants.Extras.REASON";
         public static final String ORDER_ID = "au.com.holcim.holcimapp.Constants.Extras.ORDER_ID";
+        public static final String ORDER = "au.com.holcim.holcimapp.Constants.Extras.ORDER";
+        public static final String TICKET_ID = "au.com.holcim.holcimapp.Constants.Extras.TICKET_ID";
     }
 
     public static class RequestKey {
