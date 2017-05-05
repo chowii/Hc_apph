@@ -17,6 +17,7 @@ import au.com.holcim.holcimapp.TicketsAdapter;
 import au.com.holcim.holcimapp.helpers.NavHelper;
 import au.com.holcim.holcimapp.models.Order;
 import au.com.holcim.holcimapp.models.Ticket;
+import au.com.holcim.holcimapp.models.TicketItem;
 import au.com.holcim.holcimapp.network.ApiClient;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -108,7 +109,10 @@ public class OrderDetailActivity extends BaseActivity implements TicketsAdapter.
 
     @Override
     public boolean onItemClick(int position) {
-        NavHelper.showTicketsMapActivity(this, order, order.tickets.get(position - 1).id);
-        return true;
+        if(mAdapter.getItem(position) instanceof TicketItem) {
+            NavHelper.showTicketsMapActivity(this, order, order.tickets.get(position - 1).id);
+            return true;
+        }
+        return false;
     }
 }

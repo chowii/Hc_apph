@@ -19,6 +19,8 @@ import au.com.holcim.holcimapp.OrdersAdapter;
 import au.com.holcim.holcimapp.R;
 import au.com.holcim.holcimapp.helpers.NavHelper;
 import au.com.holcim.holcimapp.models.BasicOrder;
+import au.com.holcim.holcimapp.models.Order;
+import au.com.holcim.holcimapp.models.OrderItem;
 import au.com.holcim.holcimapp.network.ApiClient;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrdersFragment extends BaseFragment implements OrdersAdapter.OnItemClickListener {
+public class OrdersFragment extends PollingFragment<List<BasicOrder>> implements OrdersAdapter.OnItemClickListener {
 
     @Bind(R.id.orders_recycler_view) RecyclerView mRecyclerView;
     @Bind(R.id.swiperefresh) SwipeRefreshLayout mSwipeRefreshLayout;
@@ -35,10 +37,10 @@ public class OrdersFragment extends BaseFragment implements OrdersAdapter.OnItem
 
     OrdersAdapter mAdapter;
     LinearLayoutManager mLayoutManager;
+    boolean showRefreshing = true;
 
-    public OrdersFragment() {
-        // Required empty public constructor
-    }
+    // Required empty public constructor
+    public OrdersFragment() {}
 
     public static OrdersFragment newInstance() {
         OrdersFragment fragment = new OrdersFragment();
@@ -46,28 +48,20 @@ public class OrdersFragment extends BaseFragment implements OrdersAdapter.OnItem
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_orders, container, false);
         ButterKnife.bind(this, view);
-        setupAdapter();
-        setupSwipeToRefresh();
-        retrieveOrders();
-        setToolbar("", R.drawable.logo);
+        setup();
+        retrieveOrdersFromCorrectMethod();
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.refresh_menu, menu);
-    }
+    // MARK: - ================== Setup ==================
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_refresh) {
-            retrieveOrders();
-        }
-        return super.onOptionsItemSelected(item);
+    private void setup() {
+        setupAdapter();
+        setupSwipeToRefresh();
+        setToolbar("", R.drawable.logo);
     }
 
     private void setupAdapter() {
@@ -84,12 +78,37 @@ public class OrdersFragment extends BaseFragment implements OrdersAdapter.OnItem
     }
 
     private void setupSwipeToRefresh() {
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                retrieveOrders();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(()
+                -> retrieveOrdersFromCorrectMethod());
+    }
+
+    // MARK: - ================== Poller Methods ==================
+
+    @Override
+    public void pollFailed(Throwable throwable) {
+        handleError(throwable);
+    }
+
+    @Override
+    public void pollSuccessful(List<BasicOrder> polledObject) {
+        this.mAdapter.updateDataset(polledObject);
+    }
+
+    @Override
+    public void pollLoading(boolean loading) {
+        mSwipeRefreshLayout.setRefreshing(showRefreshing && loading);
+        showRefreshing = false;
+    }
+
+    // MARK: - ================== Api Calls ==================
+
+    private void retrieveOrdersFromCorrectMethod() {
+        showRefreshing = true;
+        if(isPollerSet()) {
+            forceRefresh();
+        } else {
+            retrieveOrders();
+        }
     }
 
     private void retrieveOrders() {
@@ -100,6 +119,7 @@ public class OrdersFragment extends BaseFragment implements OrdersAdapter.OnItem
                 OrdersFragment.this.mSwipeRefreshLayout.setRefreshing(false);
                 mAdapter.updateDataset(response.body());
                 OrdersFragment.this.mTxtEmptyDataset.setVisibility(response.body().size() == 0 ? View.VISIBLE : View.GONE);
+                OrdersFragment.this.setObjectToPoll(response.body());
             }
 
             @Override
@@ -110,9 +130,29 @@ public class OrdersFragment extends BaseFragment implements OrdersAdapter.OnItem
         });
     }
 
+    // MARK: - ================== Menu related ==================
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.refresh_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_refresh) {
+            retrieveOrdersFromCorrectMethod();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // MARK: - ================== OnItemClickListener ==================
+
     @Override
     public boolean onItemClick(int position) {
-        NavHelper.showOrderDetailActivity(getActivity(), mAdapter.getItem(position).mOrder.id);
-        return true;
+        if(mAdapter.getItem(position) instanceof OrderItem) {
+            NavHelper.showOrderDetailActivity(getActivity(), mAdapter.getItem(position).mOrder.id);
+            return true;
+        }
+        return false;
     }
 }
