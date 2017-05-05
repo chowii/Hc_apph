@@ -106,6 +106,7 @@ public class Order extends BasicOrder implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
         dest.writeString(this.orderDateString);
         dest.writeString(this.orderCode);
         dest.writeString(this.ticketsDelivered);
@@ -125,10 +126,15 @@ public class Order extends BasicOrder implements Parcelable {
         dest.writeString(this.updatedAtString);
         dest.writeValue(this.latitude);
         dest.writeValue(this.longitude);
-        dest.writeList(this.tickets);
+        dest.writeTypedList(this.tickets);
+        dest.writeInt(this.id);
+        dest.writeString(this.status);
+        dest.writeString(this.deliveryAddress);
+        dest.writeString(this.nextEtaString);
     }
 
     protected Order(Parcel in) {
+        super(in);
         this.orderDateString = in.readString();
         this.orderCode = in.readString();
         this.ticketsDelivered = in.readString();
@@ -148,11 +154,14 @@ public class Order extends BasicOrder implements Parcelable {
         this.updatedAtString = in.readString();
         this.latitude = (Float) in.readValue(Float.class.getClassLoader());
         this.longitude = (Float) in.readValue(Float.class.getClassLoader());
-        this.tickets = new ArrayList<Ticket>();
-        in.readList(this.tickets, Ticket.class.getClassLoader());
+        this.tickets = in.createTypedArrayList(Ticket.CREATOR);
+        this.id = in.readInt();
+        this.status = in.readString();
+        this.deliveryAddress = in.readString();
+        this.nextEtaString = in.readString();
     }
 
-    public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>() {
+    public static final Creator<Order> CREATOR = new Creator<Order>() {
         @Override
         public Order createFromParcel(Parcel source) {
             return new Order(source);

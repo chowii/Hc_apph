@@ -1,13 +1,15 @@
 package au.com.holcim.holcimapp.activities;
 
-import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,14 +35,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.sephiroth.android.library.tooltip.Tooltip;
 
-public class TicketsMapActivity extends BaseActivity implements OnMapReadyCallback, ViewPager.OnPageChangeListener, GoogleMap.OnMapLoadedCallback {
+public class TicketsMapActivity extends PollingActivity<Order> implements OnMapReadyCallback, ViewPager.OnPageChangeListener, GoogleMap.OnMapLoadedCallback {
 
     Order mOrder;
     int mSelectedTicketId;
+    @Bind(R.id.cl_container) CoordinatorLayout mClContainer;
     @Bind(R.id.btn_left) ImageButton mBtnLeft;
     @Bind(R.id.btn_right) ImageButton mBtnRight;
     @Bind(R.id.btn_info) ImageButton mBtnInfo;
     @Bind(R.id.vp_tickets) ViewPager mVpTickets;
+    @Bind(R.id.pb_poll_indicator) ProgressBar mPbPollIndicator;
     SupportMapFragment mMapFragment;
     private TicketCarouselAdapter mPagerAdapter;
     private GoogleMap mMap;
@@ -53,9 +57,6 @@ public class TicketsMapActivity extends BaseActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tickets_map);
         ButterKnife.bind(this);
-        mMapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mMapFragment.getMapAsync(this);
         if(getIntent().getParcelableExtra(Constants.Extras.ORDER) != null && getIntent().getIntExtra(Constants.Extras.TICKET_ID, 0) != 0) {
             mOrder = getIntent().getParcelableExtra(Constants.Extras.ORDER);
             mSelectedTicketId = getIntent().getIntExtra(Constants.Extras.TICKET_ID, 0);
@@ -63,12 +64,41 @@ public class TicketsMapActivity extends BaseActivity implements OnMapReadyCallba
             AlertDialogHelper.showOk(this, "Error", "Failed to pass order.",
                     (dialogInterface, i) -> TicketsMapActivity.this.finish());
         }
+        setup();
+    }
+
+    @Override
+    public void pollLoading(boolean loading) {
+        mPbPollIndicator.setVisibility(loading ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void pollFailed(Throwable throwable) {
+        handleError(throwable, true, mClContainer);
+    }
+
+    @Override
+    public void pollSuccessful(Order polledObject) {
+        mOrder = polledObject;
         populateView();
+    }
+
+    private void setup() {
+        mMapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mMapFragment.getMapAsync(this);
         mPagerAdapter = new TicketCarouselAdapter(getSupportFragmentManager(), mOrder);
         mVpTickets.setAdapter(mPagerAdapter);
         mVpTickets.addOnPageChangeListener(this);
+        populateView();
+        setObjectToPoll(mOrder);
+    }
+
+    private void populateView() {
+        mPagerAdapter.updateOrder(mOrder);
         mVpTickets.setCurrentItem(mOrder.getTicketIndexWithId(mSelectedTicketId));
         hidePagerNavButtonsIfNeeded();
+        setMapMarkers();
     }
 
     @Override
@@ -76,7 +106,7 @@ public class TicketsMapActivity extends BaseActivity implements OnMapReadyCallba
         mMap = googleMap;
         mMap.setOnMapLoadedCallback(this);
         mMap.setTrafficEnabled(true);
-        mMap.setPadding(0, 0, 0, 200);
+        mMap.setPadding(0, 0, 0, ((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 132, getResources().getDisplayMetrics())));
     }
 
     private void hidePagerNavButtonsIfNeeded() {
@@ -85,19 +115,14 @@ public class TicketsMapActivity extends BaseActivity implements OnMapReadyCallba
         mBtnRight.setVisibility(currentSelectedIndex == (mOrder.tickets.size() - 1) ? View.GONE : View.VISIBLE);
     }
 
-    private void populateView() {
-
-    }
-
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
     @Override
     public void onPageSelected(int position) {
         hidePagerNavButtonsIfNeeded();
         setMapMarkers();
+        mSelectedTicketId = mOrder.tickets.get(position).id;
     }
 
     private void setMapMarkers() {
@@ -174,6 +199,11 @@ public class TicketsMapActivity extends BaseActivity implements OnMapReadyCallba
         public TicketCarouselAdapter(FragmentManager fm, Order order) {
             super(fm);
             this.mOrder = order;
+        }
+
+        public void updateOrder(Order order) {
+            this.mOrder = order;
+            notifyDataSetChanged();
         }
 
         @Override

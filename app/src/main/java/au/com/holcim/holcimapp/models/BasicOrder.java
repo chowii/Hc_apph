@@ -1,6 +1,8 @@
 package au.com.holcim.holcimapp.models;
 
 import android.content.res.Resources;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.format.DateUtils;
@@ -16,7 +18,7 @@ import au.com.holcim.holcimapp.R;
  * Created by Jovan on 21/4/17.
  */
 
-public class BasicOrder {
+public class BasicOrder implements Parcelable {
 
     public int id;
     public String status;
@@ -57,6 +59,29 @@ public class BasicOrder {
         Date date = etaDate();
         String formattedDate = DateHelper.ddMMMYYYY.format(date);
         return "" + (date != null ? formattedDate : "Unkown");
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.status);
+        dest.writeString(this.deliveryAddress);
+        dest.writeString(this.nextEtaString);
+    }
+
+    public BasicOrder() {
+    }
+
+    protected BasicOrder(Parcel in) {
+        this.id = in.readInt();
+        this.status = in.readString();
+        this.deliveryAddress = in.readString();
+        this.nextEtaString = in.readString();
     }
 
 }

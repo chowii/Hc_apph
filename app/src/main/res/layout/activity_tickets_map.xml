@@ -34,10 +34,22 @@
         android:layout_gravity="left|top"
         android:layout_margin="13dp"/>
 
+    <ProgressBar
+        android:id="@+id/pb_poll_indicator"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/primaryRed"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="54dp"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_tickets"
