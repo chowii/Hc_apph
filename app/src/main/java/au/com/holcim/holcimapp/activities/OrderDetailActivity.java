@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrderDetailActivity extends BaseActivity implements TicketsAdapter.OnItemClickListener {
+public class OrderDetailActivity extends PollingActivity<Order> implements TicketsAdapter.OnItemClickListener {
 
     int orderId;
     Order order;
@@ -35,17 +35,24 @@ public class OrderDetailActivity extends BaseActivity implements TicketsAdapter.
     @Bind(R.id.txt_empty_dataset) TextView mTxtEmptyDataset;
     TicketsAdapter mAdapter;
     LinearLayoutManager mLayoutManager;
+    boolean showRefreshing = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
          ButterKnife.bind(this);
+        orderId = getIntent().getIntExtra(Constants.Extras.ORDER_ID, 0);
+        setup();
+        retrieveOrdersFromCorrectMethod();
+    }
+
+    // MARK: - ================== Setup ==================
+
+    private void setup() {
         setupSwipeToRefresh();
         setupAdapter();
         setToolbar("", true);
-        orderId = getIntent().getIntExtra(Constants.Extras.ORDER_ID, 0);
-        retrieveOrder();
     }
 
     private void setupAdapter() {
@@ -65,9 +72,20 @@ public class OrderDetailActivity extends BaseActivity implements TicketsAdapter.
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveOrder();
+                retrieveOrdersFromCorrectMethod();
             }
         });
+    }
+
+    // MARK: - ================== Api  ==================
+
+    private void retrieveOrdersFromCorrectMethod() {
+        showRefreshing = true;
+        if(isPollerSet()) {
+            forceRefresh();
+        } else {
+            retrieveOrder();
+        }
     }
 
     private void retrieveOrder() {
@@ -79,6 +97,7 @@ public class OrderDetailActivity extends BaseActivity implements TicketsAdapter.
                 OrderDetailActivity.this.mSwipeRefreshLayout.setRefreshing(false);
                 mAdapter.updateDataset(order);
                 OrderDetailActivity.this.mTxtEmptyDataset.setVisibility(response.body().tickets.size() == 0 ? View.VISIBLE : View.GONE);
+                OrderDetailActivity.this.setObjectToPoll(response.body());
             }
 
             @Override
@@ -89,6 +108,25 @@ public class OrderDetailActivity extends BaseActivity implements TicketsAdapter.
         });
     }
 
+    // MARK: - ================== Poller Methods ==================
+
+    @Override
+    public void pollFailed(Throwable throwable) {
+        handleError(throwable);
+    }
+
+    @Override
+    public void pollSuccessful(Order polledObject) {
+        this.mAdapter.updateDataset(polledObject);
+    }
+
+    @Override
+    public void pollLoading(boolean loading) {
+        mSwipeRefreshLayout.setRefreshing(showRefreshing && loading);
+        showRefreshing = false;
+    }
+
+    // MARK: - ================== Menu ==================
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -106,6 +144,8 @@ public class OrderDetailActivity extends BaseActivity implements TicketsAdapter.
         }
         return super.onOptionsItemSelected(item);
     }
+
+    // MARK: - ================== OnClicks ==================
 
     @Override
     public boolean onItemClick(int position) {

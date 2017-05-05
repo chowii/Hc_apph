@@ -59,6 +59,10 @@ public class PollingActivity<T> extends BaseActivity implements Poller<T> {
         startPolling();
     }
 
+    protected boolean isPollerSet() {
+        return mObjectToPoll != null;
+    }
+
     // MARK: - ================== Polling Related ==================
 
     public void forceRefresh() {
