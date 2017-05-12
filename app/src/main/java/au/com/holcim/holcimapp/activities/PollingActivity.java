@@ -83,7 +83,9 @@ public class PollingActivity<T> extends BaseActivity implements Poller<T> {
 
     private void stopPolling() {
         Log.d(TAG, "Stopping poller.");
-        call.cancel();
+        if(call != null) {
+            call.cancel();
+        }
         poller.removeCallbacksAndMessages(null);
     }
 

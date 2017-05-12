@@ -3,6 +3,7 @@
 
     <string-array name="states">
         <item>NSW</item>
+        <item>ACT</item>
         <item>QLD</item>
         <item>VIC</item>
         <item>TAS</item>

@@ -50,6 +50,16 @@ public class BaseActivity extends AppCompatActivity {
                     NavHelper.showLandingActivity(this, httpException.error);
                     break;
             }
+        } else {
+            if(showInternetErrors) {
+                if (coordinatorLayout != null) {
+                    Snackbar.make(coordinatorLayout, "Something went wrong, please try again.", Snackbar.LENGTH_LONG).show();
+                } else {
+                    AlertDialogHelper.showOk(this, "Error", "Something went wrong, please try again.");
+                }
+            } else {
+                handleCustomError("Something went wrong, please try again.");
+            }
         }
     }
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="44dp"
+    android:background="@drawable/cell_white_with_seperator_background">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/NormalText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="[TITLE]"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="58dp"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/sw_enabled"
+        android:theme="@style/SwitchCompatTheme"
+        android:checked="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"/>
+
+</RelativeLayout>

@@ -19,7 +19,6 @@ import au.com.holcim.holcimapp.OrdersAdapter;
 import au.com.holcim.holcimapp.R;
 import au.com.holcim.holcimapp.helpers.NavHelper;
 import au.com.holcim.holcimapp.models.BasicOrder;
-import au.com.holcim.holcimapp.models.Order;
 import au.com.holcim.holcimapp.models.OrderItem;
 import au.com.holcim.holcimapp.network.ApiClient;
 import butterknife.Bind;

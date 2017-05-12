@@ -14,6 +14,11 @@ public class Constants {
         ENDPOINT = ctx.getString(R.string.endpoint);
     }
 
+    public static class Urls {
+        static String faq =  "https://trackmyorder.info/faq/";
+        static String howTo = "https://trackmyorder.info/how-to/";
+    }
+
     public static class Extras {
         public static final String WEBVIEW_URL = "au.com.holcim.holcimapp.Constants.Extras.WEBVIEW_URL";
         public static final String REASON = "au.com.holcim.holcimapp.Constants.Extras.REASON";

@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * Created by Jovan on 12/4/17.
  */
 
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivity extends BaseActivity {
 
     @Bind(R.id.webview) WebView mWebview;
     @Bind(R.id.av_indicator) AVLoadingIndicatorView mAvIndicator;
@@ -35,8 +35,7 @@ public class WebViewActivity extends AppCompatActivity {
             url = getIntent().getStringExtra(Constants.Extras.WEBVIEW_URL);
         }
         setupWebView(url);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setToolbar("", true);
     }
 
     private void setupWebView(String url) {

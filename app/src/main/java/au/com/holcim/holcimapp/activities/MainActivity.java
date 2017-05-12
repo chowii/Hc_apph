@@ -36,6 +36,7 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.bottom_bar) BottomNavigationView mBottomBar;
     @Bind(R.id.fl_content_container) FrameLayout mFlContainer;
     private OrdersFragment mOrdersFragment;
+    private SettingsFragment mSettingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,9 @@ public class MainActivity extends BaseActivity {
             case R.id.action_orders:
                 changeToOrdersFragment();
                 break;
+            case R.id.action_more:
+                changeToSettingsFragment();
+                break;
             default: break;
         }
     }
@@ -72,13 +76,15 @@ public class MainActivity extends BaseActivity {
         replaceFragment(mOrdersFragment);
     }
 
+    private void changeToSettingsFragment() {
+        if(mSettingsFragment == null) {
+            mSettingsFragment = SettingsFragment.newInstance();
+        }
+        replaceFragment(mSettingsFragment);
+    }
+
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        if(fragment instanceof SmsVerificationFragment) {
-//            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-//        } else {
-//            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
-//        }
         transaction.replace(R.id.fl_content_container, fragment);
         transaction.commit();
     }

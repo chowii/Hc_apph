@@ -5,11 +5,15 @@ import java.util.Map;
 
 import au.com.holcim.holcimapp.models.BasicOrder;
 import au.com.holcim.holcimapp.models.Order;
+import au.com.holcim.holcimapp.models.Settings;
 import au.com.holcim.holcimapp.models.User;
+import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -32,5 +36,14 @@ public interface HolcimService {
 
     @GET("orders/{id}")
     Call<Order> getOrder(@Path("id") int id);
+
+    @GET("settings")
+    Call<Settings> getSettings();
+
+    @PUT("settings")
+    Call<Settings> updateSettings(@Body Map<String, Object> map);
+
+    @DELETE("devices")
+    Call<Response> removeDeviceToken(@Body Map<String, Object> map);
 
 }

@@ -1,6 +1,7 @@
 package au.com.holcim.holcimapp.helpers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import au.com.holcim.holcimapp.Constants;
@@ -11,12 +12,21 @@ import au.com.holcim.holcimapp.activities.TicketsMapActivity;
 import au.com.holcim.holcimapp.activities.WebViewActivity;
 import au.com.holcim.holcimapp.models.Order;
 import au.com.holcim.holcimapp.models.Ticket;
+import au.com.holcim.holcimapp.network.ApiClient;
 
 /**
  * Created by Jovan on 12/4/17.
  */
 
 public class NavHelper {
+
+    public static void logout(Activity activity) {
+        SharedPrefsHelper.getInstance().removeUserCredentials();
+        activity.startActivity(new Intent(activity, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |  Intent.FLAG_ACTIVITY_NEW_TASK));
+        activity.finish();
+    }
+
+    // MARK: - ================== Show Actions ==================
 
     public static void showWebView(Activity activity, String url) {
         activity.startActivity(new Intent(activity, WebViewActivity.class)
@@ -43,5 +53,12 @@ public class NavHelper {
         activity.startActivity(new Intent(activity, TicketsMapActivity.class)
                 .putExtra(Constants.Extras.ORDER, order)
                 .putExtra(Constants.Extras.TICKET_ID, selectedTicketId));
+    }
+
+    // MARK: - ================== Return Intent ==================
+
+    public static Intent webViewActivityIntent(Context context, String url) {
+        return new Intent(context, WebViewActivity.class)
+                .putExtra(Constants.Extras.WEBVIEW_URL, url);
     }
 }
