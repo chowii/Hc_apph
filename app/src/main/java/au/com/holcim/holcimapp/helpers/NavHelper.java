@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 
 import au.com.holcim.holcimapp.Constants;
+import au.com.holcim.holcimapp.activities.AlertSettingsActivity;
 import au.com.holcim.holcimapp.activities.LoginActivity;
 import au.com.holcim.holcimapp.activities.MainActivity;
 import au.com.holcim.holcimapp.activities.OrderDetailActivity;
 import au.com.holcim.holcimapp.activities.TicketsMapActivity;
 import au.com.holcim.holcimapp.activities.WebViewActivity;
 import au.com.holcim.holcimapp.models.Order;
+import au.com.holcim.holcimapp.models.Settings;
 import au.com.holcim.holcimapp.models.Ticket;
 import au.com.holcim.holcimapp.network.ApiClient;
 
@@ -55,10 +57,20 @@ public class NavHelper {
                 .putExtra(Constants.Extras.TICKET_ID, selectedTicketId));
     }
 
+    public static void showAlertSettingsActivity(Activity activity, Settings settings) {
+        activity.startActivity(new Intent(activity, AlertSettingsActivity.class)
+                .putExtra(Constants.Extras.SETTINGS, settings));
+    }
+
     // MARK: - ================== Return Intent ==================
 
     public static Intent webViewActivityIntent(Context context, String url) {
         return new Intent(context, WebViewActivity.class)
                 .putExtra(Constants.Extras.WEBVIEW_URL, url);
+    }
+
+    public static Intent alertSettingsActivityIntent(Context context, Settings settings) {
+        return new Intent(context, AlertSettingsActivity.class)
+                .putExtra(Constants.Extras.SETTINGS, settings);
     }
 }

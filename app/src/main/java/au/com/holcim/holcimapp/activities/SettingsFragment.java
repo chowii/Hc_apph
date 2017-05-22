@@ -74,7 +74,7 @@ public class SettingsFragment extends BaseFragment implements SwitchItemListener
     // MARK: - ================== Setup ==================
 
     private void setupAdapter() {
-        mAdapter = new SettingsAdapter(getActivity(), this, this, mSettings.receivePushNotifications);
+        mAdapter = new SettingsAdapter(getActivity(), this, this, mSettings);
         mAdapter.addListener(this)
                 .setAnimationOnScrolling(true)
                 .setAnimationOnReverseScrolling(true);

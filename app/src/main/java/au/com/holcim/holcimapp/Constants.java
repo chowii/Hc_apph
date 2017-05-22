@@ -25,6 +25,7 @@ public class Constants {
         public static final String ORDER_ID = "au.com.holcim.holcimapp.Constants.Extras.ORDER_ID";
         public static final String ORDER = "au.com.holcim.holcimapp.Constants.Extras.ORDER";
         public static final String TICKET_ID = "au.com.holcim.holcimapp.Constants.Extras.TICKET_ID";
+        public static final String SETTINGS = "au.com.holcim.holcimapp.Constants.Extras.SETTINGS";
     }
 
     public static class RequestKey {
