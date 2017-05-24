@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="111dp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/splash_logo" />
+
+
+    <RelativeLayout
+        android:id="@+id/call_button"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginLeft="54dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:clickable="true"
+        >
+        <ImageView
+            android:id="@+id/call_iv"
+            android:src="@drawable/white_phone"
+            style="@style/RedRoundedButton.ImageViewButton"
+            android:contentDescription="@string/contact_call_text"
+            android:layout_marginBottom="7dp"
+            />
+        <TextView
+            android:text="@string/contact_call_text"
+            style="@style/TextViewButton.White"
+            android:paddingBottom="13dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/email_button"
+        android:layout_width="140dp"
+        android:layout_height="150dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/call_button"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.35"
+        >
+
+        <ImageView
+            android:id="@+id/email_iv"
+            android:src="@drawable/red_email"
+            style="@style/RedRoundedStrokeButton.ImageViewButton"
+            android:contentDescription="@string/contact_email_text"
+            />
+        <TextView
+            android:text="@string/contact_email_text"
+            style="@style/TextViewButton.Red"
+            />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

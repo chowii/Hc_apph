@@ -33,6 +33,7 @@ public class SplashActivity extends BaseActivity {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         NavHelper.showMainActivity(SplashActivity.this);
+                        SharedUser.getInstance().setUser(response.body());
                     }
 
                     @Override

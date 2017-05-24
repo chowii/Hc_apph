@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
         changeToSmsVerifyFragment();
     }
 
+
     // MARK: - ================== SmsVerifyListener methods ==================
 
     @Override

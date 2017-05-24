@@ -15,6 +15,9 @@ public class User {
     public String state;
     @SerializedName("auth_token")
     public String authToken;
-
+    @SerializedName("contact_number")
+    public String contactNumber;
+    @SerializedName("contact_email")
+    public String contactEmail;
 
 }

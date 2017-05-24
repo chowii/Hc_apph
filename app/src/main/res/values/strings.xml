@@ -26,5 +26,7 @@
 
     <string name="apptour_button_skip_text">Skip</string>
     <string name="apptour_button_next_text">Next</string>
+    <string name="contact_call_text">Call</string>
+    <string name="contact_email_text">Email</string>
 
 </resources>

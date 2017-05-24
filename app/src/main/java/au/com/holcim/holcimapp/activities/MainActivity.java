@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import au.com.holcim.holcimapp.R;
+import au.com.holcim.holcimapp.fragments.ContactFragment;
 import au.com.holcim.holcimapp.fragments.OrdersFragment;
 import au.com.holcim.holcimapp.helpers.BottomNavigationViewHelper;
 import butterknife.Bind;
@@ -63,6 +64,8 @@ public class MainActivity extends BaseActivity {
             case R.id.action_more:
                 changeToSettingsFragment();
                 break;
+            case R.id.action_contact:
+                replaceFragment(ContactFragment.newInstance());
             default: break;
         }
     }
@@ -82,6 +85,10 @@ public class MainActivity extends BaseActivity {
         }
         replaceFragment(mSettingsFragment);
     }
+
+
+
+
 
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
