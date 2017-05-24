@@ -16,4 +16,5 @@ public class User {
     @SerializedName("auth_token")
     public String authToken;
 
+
 }

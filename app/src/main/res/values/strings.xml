@@ -11,4 +11,20 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
+    <!-- App Tour Strings -->
+    <string name="apptour_delivery_list_title_text">View Upcoming Order</string>
+    <string name="apptour_delivery_list_desc_text">View today\'s order as well as orders for the next\n14 days and their details. Review which orders\nhave been confirmed and which haven\'t</string>
+
+    <string name="apptour_delivery_details_title_text">View Details for One Order</string>
+    <string name="apptour_delivery_details_desc_text">View the status of one order including individual\ntickets. Click on one of the tickets \'In\nTransit\'(green) to view the truck\'s location.</string>
+
+    <string name="apptour_map_title_text">View Your Deliveries Location</string>
+    <string name="apptour_map_desc_text">View the current location of a ticket that is\ncurrently in transit. Swipe right to view the\nlocation of other \'In Transit\' tickets.</string>
+
+    <string name="apptour_alert_title_text">Be Notified about Status Updates</string>
+    <string name="apptour_alert_desc_text">Review the latest status updates of your tickets\nand orders. Adjust the notification settings in the\nmenu option\'More\'.</string>
+
+    <string name="apptour_button_skip_text">Skip</string>
+    <string name="apptour_button_next_text">Next</string>
+
 </resources>

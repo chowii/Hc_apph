@@ -20,4 +20,6 @@
 
     <color name="switch_enabled_green">#64DD17</color>
 
+    <color name="greyText">#BEBABA</color>
+
 </resources>

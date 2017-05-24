@@ -92,4 +92,27 @@
         <item name="colorControlActivated">@color/switch_enabled_green</item>
     </style>
 
+    <!-- App Tour Style [Not Exhaustive]-->
+    <style name="TextView">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextView.Wide">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="TextView.Wide.Title">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextView.Wide.Desc">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+    </style>
+    <style name="TextView.Wide.Desc.Grey">
+        <item name="android:textColor">@color/greyText</item>
+    </style>
+
 </resources>

@@ -20,7 +20,7 @@ public class StatusCodeInterceptor implements Interceptor {
         Response response = chain.proceed(request);
 
         int statusCode = response.code();
-        if(statusCode < 200 || statusCode > 299 || response.body() == null) {
+            if(statusCode < 200 || statusCode > 299 || response.body() == null) {
             handleErrorResponse(response);
         }
 

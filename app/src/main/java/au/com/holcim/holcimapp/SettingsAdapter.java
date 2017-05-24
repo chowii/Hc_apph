@@ -52,7 +52,7 @@ public class SettingsAdapter extends FlexibleAdapter<AbstractSectionableItem> {
         SettingsHeaderItem helpHeader = new SettingsHeaderItem("HELP");
         items.add(new SettingsItem(helpHeader, "How To Order", NavHelper.webViewActivityIntent(mContext, Constants.Urls.howTo)));
         items.add(new SettingsItem(helpHeader, "FAQ", NavHelper.webViewActivityIntent(mContext, Constants.Urls.faq)));
-        items.add(new SettingsItem(helpHeader, "App Tour", NavHelper.webViewActivityIntent(mContext, Constants.Urls.faq)));
+        items.add(new SettingsItem(helpHeader, "App Tour", NavHelper.appTourIntent(mContext, mSettings)));
         items.add(new RedRoundedButtonItem(helpHeader, "Logout", mOnClickListener));
         return items;
     }

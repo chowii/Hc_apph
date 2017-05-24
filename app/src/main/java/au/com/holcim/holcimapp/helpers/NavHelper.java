@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import au.com.holcim.holcimapp.Constants;
 import au.com.holcim.holcimapp.activities.AlertSettingsActivity;
+import au.com.holcim.holcimapp.activities.AppTour.AppTourActivity;
 import au.com.holcim.holcimapp.activities.LoginActivity;
 import au.com.holcim.holcimapp.activities.MainActivity;
 import au.com.holcim.holcimapp.activities.OrderDetailActivity;
@@ -71,6 +72,11 @@ public class NavHelper {
 
     public static Intent alertSettingsActivityIntent(Context context, Settings settings) {
         return new Intent(context, AlertSettingsActivity.class)
+                .putExtra(Constants.Extras.SETTINGS, settings);
+    }
+
+    public static Intent appTourIntent(Context context, Settings settings) {
+        return new Intent(context, AppTourActivity.class)
                 .putExtra(Constants.Extras.SETTINGS, settings);
     }
 }
