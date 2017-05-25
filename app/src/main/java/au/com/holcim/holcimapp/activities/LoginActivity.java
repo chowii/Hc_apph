@@ -1,5 +1,8 @@
 package au.com.holcim.holcimapp.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 
 import au.com.holcim.holcimapp.Constants;
+import au.com.holcim.holcimapp.activities.AppTour.AppTourActivity;
 import au.com.holcim.holcimapp.fragments.LoginFragment;
 import au.com.holcim.holcimapp.R;
 import au.com.holcim.holcimapp.helpers.NavHelper;
@@ -30,10 +34,15 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        changeToLoginFragment();
-        String reason = getIntent().getStringExtra(Constants.Extras.REASON);
-        if(reason != null) {
-            Snackbar.make(mClcontainer, reason, Snackbar.LENGTH_LONG).show();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean seenTour = prefs.getBoolean(getString(R.string.apptour_check_string),false);
+        if(!seenTour) startActivity(new Intent(this, AppTourActivity.class));
+        else {
+            changeToLoginFragment();
+            String reason = getIntent().getStringExtra(Constants.Extras.REASON);
+            if (reason != null) {
+                Snackbar.make(mClcontainer, reason, Snackbar.LENGTH_LONG).show();
+            }
         }
     }
 

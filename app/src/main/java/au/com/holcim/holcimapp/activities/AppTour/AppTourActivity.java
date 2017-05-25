@@ -1,5 +1,6 @@
 package au.com.holcim.holcimapp.activities.AppTour;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import au.com.holcim.holcimapp.R;
+import au.com.holcim.holcimapp.activities.LoginActivity;
 import au.com.holcim.holcimapp.activities.SplashActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,14 +45,14 @@ public class AppTourActivity extends AppCompatActivity implements ViewPager.OnPa
 
     ImageView[] mIndicatorImageArray;
     private int tourSize;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_tour);
         ButterKnife.bind(this);
         initView();
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        pref.edit().putBoolean("ShowAppTour", true).apply();
+
     }
 
     private void initView(){
@@ -68,9 +70,15 @@ public class AppTourActivity extends AppCompatActivity implements ViewPager.OnPa
         Typeface ty = Typeface.createFromAsset(getAssets(), "fonts/arial.ttf");
         mSkipButton.setTypeface(ty, Typeface.BOLD);
         mSkipButton.setTextSize(12);
-        mSkipButton.setOnClickListener(v ->
-        {
-            startActivity(new Intent(this, SplashActivity.class));
+        mSkipButton.setOnClickListener(v -> {
+            String checkString = getString(R.string.apptour_check_string);
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean seenTour = pref.getBoolean(checkString, false);
+            if(!seenTour){
+                startActivity(new Intent(this, LoginActivity.class));
+                pref.edit().putBoolean(checkString, true).apply();
+            }else finish();
+
         });
     }
 
