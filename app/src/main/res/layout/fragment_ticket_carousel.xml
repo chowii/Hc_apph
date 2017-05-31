@@ -5,7 +5,7 @@
              tools:context="au.com.holcim.holcimapp.fragments.TicketCarouselFragment"
     android:layout_margin="6px">
 
-    <include layout="@layout/ticket_list_item"
+    <include layout="@layout/item_list_ticket"
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
 

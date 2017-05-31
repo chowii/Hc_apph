@@ -61,9 +61,7 @@ public class Order extends BasicOrder implements Parcelable {
         return new LatLng(latitude != null ? latitude : 0, longitude != null ? longitude : 0);
     }
 
-    public Order() {
-
-    }
+    public Order() {}
 
     public Float getTotalProductShippedFloat() {
         return Float.valueOf(totalProductShipped) != null ? Float.valueOf(totalProductShipped) : 0;

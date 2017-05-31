@@ -84,7 +84,7 @@ public class SharedPrefsHelper {
     }
 
     public String getDeviceToken() {
-        return sharedPreferences.getString(SharedPrefsHelper.SHARED_PREFS_DEVICE_TOKEN, "123"); //TODO: remove
+        return sharedPreferences.getString(SharedPrefsHelper.SHARED_PREFS_DEVICE_TOKEN, "123123"); //TODO: remove
     }
 }
 

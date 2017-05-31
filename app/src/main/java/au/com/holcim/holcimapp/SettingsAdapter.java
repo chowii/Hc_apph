@@ -48,7 +48,7 @@ public class SettingsAdapter extends FlexibleAdapter<AbstractSectionableItem> {
         List<AbstractSectionableItem> items = new ArrayList<>();
         SettingsHeaderItem settingsHeader = new SettingsHeaderItem("SETTINGS");
         items.add(new SettingsSwitchItem(settingsHeader, "Push Notifications", mSettings.receivePushNotifications, "receive_push_notifications", mSwitchListener));
-        items.add(new SettingsItem(settingsHeader, "Alerts", NavHelper.alertSettingsActivityIntent(mContext, mSettings)));
+        items.add(new SettingsItem(settingsHeader, "Alert", NavHelper.alertSettingsActivityIntent(mContext, mSettings)));
         SettingsHeaderItem helpHeader = new SettingsHeaderItem("HELP");
         items.add(new SettingsItem(helpHeader, "How To Order", NavHelper.webViewActivityIntent(mContext, Constants.Urls.howTo)));
         items.add(new SettingsItem(helpHeader, "FAQ", NavHelper.webViewActivityIntent(mContext, Constants.Urls.faq)));

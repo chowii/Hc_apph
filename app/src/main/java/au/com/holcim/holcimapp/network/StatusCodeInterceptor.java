@@ -1,6 +1,8 @@
 package au.com.holcim.holcimapp.network;
 
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import au.com.holcim.holcimapp.helpers.SharedPrefsHelper;
@@ -21,7 +23,8 @@ public class StatusCodeInterceptor implements Interceptor {
 
         int statusCode = response.code();
             if(statusCode < 200 || statusCode > 299 || response.body() == null) {
-            handleErrorResponse(response);
+                Log.d("TAG", "interceptStatusCode: " + statusCode);
+                handleErrorResponse(response);
         }
 
         return response;

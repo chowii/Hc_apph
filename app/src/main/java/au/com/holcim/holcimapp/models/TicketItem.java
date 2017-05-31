@@ -10,7 +10,6 @@ import java.util.List;
 
 import au.com.holcim.holcimapp.DateHelper;
 import au.com.holcim.holcimapp.OrderDetailHeaderItem;
-import au.com.holcim.holcimapp.OrderHeaderItem;
 import au.com.holcim.holcimapp.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,7 +53,7 @@ public class TicketItem extends AbstractSectionableItem<TicketItem.TicketViewHol
 
     @Override
     public int getLayoutRes() {
-        return R.layout.ticket_list_item;
+        return R.layout.item_list_ticket;
     }
 
     @Override

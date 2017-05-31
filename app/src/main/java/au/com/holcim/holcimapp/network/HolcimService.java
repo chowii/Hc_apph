@@ -3,6 +3,7 @@ package au.com.holcim.holcimapp.network;
 import java.util.List;
 import java.util.Map;
 
+import au.com.holcim.holcimapp.alerts.Alert;
 import au.com.holcim.holcimapp.models.BasicOrder;
 import au.com.holcim.holcimapp.models.Order;
 import au.com.holcim.holcimapp.models.Settings;
@@ -24,6 +25,9 @@ public interface HolcimService {
 
     @GET("users")
     Call<User> getCurrentUser();
+
+    @GET("alerts")
+    Call<List<Alert>> getAlerts();
 
     @POST("sms")
     Call<User> requestSms(@Body Map<String, String> map);
